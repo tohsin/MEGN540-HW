@@ -165,6 +165,82 @@ int main()
 
     }
 
+    float num2[] = { 0.046582906636443696668514746761502, 0.18633162654577478667405898704601, 0.2794974398186621522555128649401, 0.18633162654577478667405898704601, 0.046582906636443696668514746761502};
+    float den2[] = { 1.0, -0.78209519802333749005640584073262, 0.67997852691629945276474700222025, -0.18267569775303207912919845057331, 0.030118875043169249239305429455271};
+    filter_order = sizeof(num)/sizeof(float) -1;
+    Shift_Filter(&moving_average, 1.2);
+    Filter_Init(&moving_average, num2, den2, filter_order );
+    float filter_out = Filter_Value(&moving_average, 3.5);
+    float filter_exp = 0.1630401760;
+    total_score ++;
+    if( fabs(filter_out - filter_exp) < 1e-5 )
+    {
+        running_score ++;
+    } else {
+        printf("Error in filtering on Filter_Value call for real filter.\t is: %f \texp:%f\n", filter_out, filter_exp);
+
+    }
+
+    filter_out = Filter_Value(&moving_average, 2.3);
+    filter_exp = 0.8868142962;
+    total_score ++;
+    if( fabs(filter_out - filter_exp) < 1e-5 )
+    {
+        running_score ++;
+    } else {
+        printf("Error in filtering on Filter_Value call for real filter.\t is: %f \texp:%f\n", filter_out, filter_exp);
+
+    }
+
+
+    filter_out = Filter_Value(&moving_average, -1.4);
+    filter_exp = 1.9242972136;
+    total_score ++;
+    if( fabs(filter_out - filter_exp) < 1e-5 )
+    {
+        running_score ++;
+    } else {
+        printf("Error in filtering on Filter_Value call for real filter.\t is: %f \texp:%f\n", filter_out, filter_exp);
+
+    }
+
+
+    filter_out = Filter_Value(&moving_average, 6.9);
+    filter_exp = 2.2873148918;
+    total_score ++;
+    if( fabs(filter_out - filter_exp) < 1e-5 )
+    {
+        running_score ++;
+    } else {
+        printf("Error in filtering on Filter_Value call for real filter.\t is: %f \texp:%f\n", filter_out, filter_exp);
+
+    }
+
+
+    filter_out = Filter_Value(&moving_average, -2);
+    filter_exp = 2.0303349495;
+    total_score ++;
+    if( fabs(filter_out - filter_exp) < 1e-5 )
+    {
+        running_score ++;
+    } else {
+        printf("Error in filtering on Filter_Value call for real filter.\t is: %f \texp:%f\n", filter_out, filter_exp);
+
+    }
+
+
+    filter_out = Filter_Value(&moving_average, -3);
+    filter_exp = 1.6197994947;
+    total_score ++;
+    if( fabs(filter_out - filter_exp) < 1e-5 )
+    {
+        running_score ++;
+    } else {
+        printf("Error in filtering on Filter_Value call for real filter.\t is: %f \texp:%f\n", filter_out, filter_exp);
+
+    }
+
+
     float filt_last = Filter_Value(&moving_average, 0);
     total_score += 10;
     if( fabs(filt_last - Filter_Last_Output(&moving_average)) < 1e-4 )
