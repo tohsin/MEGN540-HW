@@ -111,7 +111,7 @@ int main()
     }
 
     // Shift_Filter
-    Shift_Filter(&moving_average, 1.23);
+    Filter_ShiftBy(&moving_average, 1.23);
     for( int i=0; i<=filter_order; i++ )
     {
         total_score ++;
@@ -120,7 +120,7 @@ int main()
             running_score ++;
         } else
         {
-            printf("Shift_Filter Error: in_list index %i not shifted correctly.\n",i);
+            printf("Filter_ShiftBy Error: in_list index %i not shifted correctly.\n",i);
         }
 
         total_score ++;
@@ -129,7 +129,29 @@ int main()
             running_score ++;
         } else
         {
-            printf("Shift_Filter Error: out_list  index %i not shifted correctly.\n",i);
+            printf("Filter_ShiftBy Error: out_list  index %i not shifted correctly.\n",i);
+        }
+    }
+
+    Filter_SetTo(&moving_average, 2.35);
+    for( int i=0; i<=filter_order; i++ )
+    {
+        total_score ++;
+        if( fabs(rb_get_F( &moving_average.in_list, i) - 2.35) < 1e-5 )
+        {
+            running_score ++;
+        } else
+        {
+            printf("Filter_SetTo Error: in_list index %i not set correctly.\n",i);
+        }
+
+        total_score ++;
+        if(  fabs(rb_get_F( &moving_average.out_list, i) - 2.35) < 1e-5  )
+        {
+            running_score ++;
+        } else
+        {
+            printf("Filter_SetTo Error: out_list  index %i not set correctly.\n",i);
         }
     }
 
