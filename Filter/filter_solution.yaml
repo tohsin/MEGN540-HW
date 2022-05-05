@@ -1,0 +1,195 @@
+key: value
+seq:
+  - first element
+  - second element
+numerator:
+  - 0.004824343
+  - 0.01929737
+  - 0.02894606
+  - 0.01929737
+  - 0.004824343
+denominator:
+  - 1
+  - -2.369513
+  - 2.313988
+  - -1.054665
+  - 0.1873795
+Filter_Init.numerator:
+  - 0.004824343
+  - 0.01929737
+  - 0.02894606
+  - 0.01929737
+  - 0.004824343
+Filter_Init.denominator:
+  - 1
+  - -2.369513
+  - 2.313988
+  - -1.054665
+  - 0.1873795
+Filter_Init.in_list:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+Filter_Init.out_list:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+Filter_ShiftBy.val: -1.1
+Filter_SetTo.val: 1.1
+Filter_SetTo.numerator:
+  - 0.004824343
+  - 0.01929737
+  - 0.02894606
+  - 0.01929737
+  - 0.004824343
+Filter_SetTo.denominator:
+  - 1
+  - -2.369513
+  - 2.313988
+  - -1.054665
+  - 0.1873795
+Filter_SetTo.in_list:
+  - 1.1
+  - 1.1
+  - 1.1
+  - 1.1
+  - 1.1
+Filter_SetTo.out_list:
+  - 1.1
+  - 1.1
+  - 1.1
+  - 1.1
+  - 1.1
+Filter_ShiftBy.numerator:
+  - 0.004824343
+  - 0.01929737
+  - 0.02894606
+  - 0.01929737
+  - 0.004824343
+Filter_ShiftBy.denominator:
+  - 1
+  - -2.369513
+  - 2.313988
+  - -1.054665
+  - 0.1873795
+Filter_ShiftBy.in_list:
+  - -1.1
+  - -1.1
+  - -1.1
+  - -1.1
+  - -1.1
+Filter_ShiftBy.out_list:
+  - -1.1
+  - -1.1
+  - -1.1
+  - -1.1
+  - -1.1
+Filter_Value.val: -1.1
+Filter_Value.ret: -0.005306778
+Filter_Value.numerator:
+  - 0.004824343
+  - 0.01929737
+  - 0.02894606
+  - 0.01929737
+  - 0.004824343
+Filter_Value.denominator:
+  - 1
+  - -2.369513
+  - 2.313988
+  - -1.054665
+  - 0.1873795
+Filter_Value.in_list:
+  - -1.1
+  - 0
+  - 0
+  - 0
+  - 0
+Filter_Value.out_list:
+  - -0.005306778
+  - 0
+  - 0
+  - 0
+  - 0
+Test:
+  - Filter_Init
+  - Filter_SetTo
+  - Filter_ShiftBy
+  - Filter_Value
+  - Filter_Value_Step
+  - Filter_Last_Output
+Filter_Value_Step.val: 1
+Filter_Value_Step.ret:
+  - 0.004824343
+  - 0.03555306
+  - 0.1261477
+  - 0.2940926
+  - 0.5187339
+  - 0.7521911
+  - 0.9457037
+  - 1.069469
+  - 1.119072
+  - 1.110564
+Filter_Value_Step.numerator:
+  - 0.004824343
+  - 0.01929737
+  - 0.02894606
+  - 0.01929737
+  - 0.004824343
+Filter_Value_Step.denominator:
+  - 1
+  - -2.369513
+  - 2.313988
+  - -1.054665
+  - 0.1873795
+Filter_Value_Step.in_list:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+Filter_Value_Step.out_list:
+  - 1.110564
+  - 1.119072
+  - 1.069469
+  - 0.9457037
+  - 0.7521911
+Filter_Last_Output.val: 1
+Filter_Last_Output.ret:
+  - 0.004824343
+  - 0.03555306
+  - 0.1261477
+  - 0.2940926
+  - 0.5187339
+  - 0.7521911
+  - 0.9457037
+  - 1.069469
+  - 1.119072
+  - 1.110564
+Filter_Last_Output.numerator:
+  - 0.004824343
+  - 0.01929737
+  - 0.02894606
+  - 0.01929737
+  - 0.004824343
+Filter_Last_Output.denominator:
+  - 1
+  - -2.369513
+  - 2.313988
+  - -1.054665
+  - 0.1873795
+Filter_Last_Output.in_list:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+Filter_Last_Output.out_list:
+  - 1.110564
+  - 1.119072
+  - 1.069469
+  - 0.9457037
+  - 0.7521911
