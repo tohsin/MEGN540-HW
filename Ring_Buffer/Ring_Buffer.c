@@ -1,10 +1,40 @@
+/*
+         MEGN540 Mechatronics Lab
+    Copyright (C) Andrew Petruska, 2023.
+       apetruska [at] mines [dot] edu
+          www.mechanical.mines.edu
+*/
+
+/*
+    Copyright (c) 2023 Andrew Petruska at Colorado School of Mines
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+*/
+
 #include "Ring_Buffer.h"
 #include <stdio.h> // required for the printf in rb_print_data_X functions
 
 // define constant masks for use later based on length chosen
 // these are global scope only to this c file
-const uint8_t RB_MASK_F = RB_LENGTH_F-1;
-const uint8_t RB_MASK_C = RB_LENGTH_C-1; 
+static const uint8_t RB_MASK_F = RB_LENGTH_F-1;
+static const uint8_t RB_MASK_B = RB_LENGTH_B-1; 
 
 
 /* Initialization */
@@ -16,7 +46,7 @@ void rb_initialize_F( struct Ring_Buffer_F* p_buf )
     p_buf->end_index = 0;
 }
 
-void rb_initialize_C( struct Ring_Buffer_C* p_buf )
+void rb_initialize_B( struct Ring_Buffer_B* p_buf )
 {
     // set start and end indices to 0
     // no point changing data
@@ -33,7 +63,7 @@ uint8_t rb_length_F( const struct Ring_Buffer_F* p_buf)
     uint8_t length = (p_buf->end_index - p_buf->start_index) & RB_MASK_F;
     return length;
 }
-uint8_t rb_length_C( const struct Ring_Buffer_C* p_buf)
+uint8_t rb_length_B( const struct Ring_Buffer_B* p_buf)
 {
     // your code here!
     // make sure to use the correct mask!
@@ -51,7 +81,7 @@ void rb_push_back_F( struct Ring_Buffer_F* p_buf, float value)
     // your code here!
 
 }
-void rb_push_back_C( struct Ring_Buffer_C* p_buf, char value)
+void rb_push_back_B( struct Ring_Buffer_B* p_buf, uint8_t value)
 {
     // Put data at index end
     // Increment the end index and wrap using the mask.
@@ -70,7 +100,7 @@ void rb_push_front_F( struct Ring_Buffer_F* p_buf, float value)
     // your code here!
 
 }
-void rb_push_front_C( struct Ring_Buffer_C* p_buf, char value)
+void rb_push_front_B( struct Ring_Buffer_B* p_buf, uint8_t value)
 {
     // Decrement the start index and wrap using the mask.
     // If the end equals the start decrement the end index
@@ -91,7 +121,7 @@ float rb_pop_back_F( struct Ring_Buffer_F* p_buf)
     // your code here!
     return 0;
 }
-char  rb_pop_back_C( struct Ring_Buffer_C* p_buf)
+uint8_t  rb_pop_back_B( struct Ring_Buffer_B* p_buf)
 {
     // if end does not equal start (length zero),
     //    reduce end index by 1 and mask
@@ -115,7 +145,7 @@ float rb_pop_front_F( struct Ring_Buffer_F* p_buf)
     return 0;
 
 }
-char  rb_pop_front_C( struct Ring_Buffer_C* p_buf)
+uint8_t  rb_pop_front_B( struct Ring_Buffer_B* p_buf)
 {
     // if end does not equal start (length zero),
     //    get value to return at front
@@ -135,7 +165,7 @@ float rb_get_F( const struct Ring_Buffer_F* p_buf, uint8_t index)
     // your code here!
     return 0;
 }
-char  rb_get_C( const struct Ring_Buffer_C* p_buf, uint8_t index)
+uint8_t  rb_get_B( const struct Ring_Buffer_B* p_buf, uint8_t index)
 {
     // return value at start + index wrapped properly
 
@@ -153,7 +183,7 @@ void  rb_set_F( struct Ring_Buffer_F* p_buf, uint8_t index, float value)
 
     // your code here!
 }
-void  rb_set_C( struct Ring_Buffer_C* p_buf, uint8_t index, char value)
+void  rb_set_B( struct Ring_Buffer_B* p_buf, uint8_t index, uint8_t value)
 {
     // set value at start + index wrapped properly
 
@@ -180,19 +210,19 @@ void rb_print_data_F(struct Ring_Buffer_F *p_buf)
 
 }
 
-void rb_print_data_C(struct Ring_Buffer_C *p_buf)
+void rb_print_data_B(struct Ring_Buffer_B *p_buf)
 {
-    printf("-------CHAR RINGBUFFER INFO--------\nRing Buffer Length: %i\nStart index: %i\nEnd index: %i\n",rb_length_C(p_buf),p_buf->start_index,p_buf->end_index);
+    printf("-------BYTE RINGBUFFER INFO--------\nRing Buffer Length: %i\nStart index: %i\nEnd index: %i\n",rb_length_B(p_buf),p_buf->start_index,p_buf->end_index);
 
     printf("\nActive Storage\n");
-    for(int i=0; i<rb_length_C(p_buf); i++)
-        printf("Index: %i, Internal Index: %i, Value: %c\n", i, p_buf->start_index+i, rb_get_C(p_buf,i) );
+    for(int i=0; i<rb_length_B(p_buf); i++)
+        printf("Index: %i, Internal Index: %i, Value (ascii): %c, Value (hex): 0x%X\n", i, p_buf->start_index+i, rb_get_B(p_buf,i), rb_get_B(p_buf,i)  );
 
     printf("\nInternal Storage\n");
-    for(int i=0; i<RB_LENGTH_C; i++)
-        printf("Internal Index: %i, Value: %c\n", i, p_buf->buffer[i] );
+    for(int i=0; i<RB_LENGTH_B; i++)
+        printf("Internal Index: %i, Value (ascii): %c, Value (hex): 0x%X\n", i, p_buf->buffer[i], p_buf->buffer[i] );
 
-    printf("-------END CHAR RINGBUFFER INFO---------\n\n");
+    printf("-------END BYTE RINGBUFFER INFO---------\n\n");
 
 }
 

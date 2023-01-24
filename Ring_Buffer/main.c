@@ -23,18 +23,18 @@ int main(void)
     rb_print_data_F(&rbF_pt); // should be length 3 printing 3,4,5 as the active values
 
 
-    struct Ring_Buffer_C rbC_pt;
-    rb_initialize_C(&rbC_pt);
+    struct Ring_Buffer_B rbC_pt;
+    rb_initialize_B(&rbC_pt);
 
-    rb_push_back_C(&rbC_pt,'a');
-    rb_push_back_C(&rbC_pt,'b');
-    rb_push_back_C(&rbC_pt,'c');
-    rb_push_back_C(&rbC_pt,'d');
-    rb_push_back_C(&rbC_pt,'e');
-    rb_pop_front_C(&rbC_pt);
-    rb_pop_front_C(&rbC_pt);
+    rb_push_back_B(&rbC_pt,'a');
+    rb_push_back_B(&rbC_pt,'b');
+    rb_push_back_B(&rbC_pt,'c');
+    rb_push_back_B(&rbC_pt,'d');
+    rb_push_back_B(&rbC_pt,'e');
+    rb_pop_front_B(&rbC_pt);
+    rb_pop_front_B(&rbC_pt);
 
-    rb_print_data_C(&rbC_pt); // should be length 3 printing c,d,e as the active values
+    rb_print_data_B(&rbC_pt); // should be length 3 printing c,d,e as the active values
 
 
     // Evaluation Portion of the script
@@ -42,7 +42,7 @@ int main(void)
     int score = 0;
     //needed for testing
     const uint8_t RB_MASK_F = RB_LENGTH_F-1;
-    const uint8_t RB_MASK_C = RB_LENGTH_C-1;
+    const uint8_t RB_MASK_B = RB_LENGTH_B-1;
     float float_tol = .001;
 
 //Init (F)
@@ -59,14 +59,14 @@ int main(void)
 
 
     //init (C)
-    rb_initialize_C(&rbC_pt);
+    rb_initialize_B(&rbC_pt);
     if (rbC_pt.start_index != 0)
-        printf("rb_initialize_C: start_index = %i, should = 0. \n",rbF_pt.start_index);
+        printf("rb_initialize_B: start_index = %i, should = 0. \n",rbF_pt.start_index);
     else
         score++;
 
     if (rbC_pt.end_index != 0)
-        printf("rb_initialize_C: end_index = %i, should = 0. \n",rbF_pt.end_index);
+        printf("rb_initialize_B: end_index = %i, should = 0. \n",rbF_pt.end_index);
     else
         score++;
 
@@ -93,19 +93,19 @@ int main(void)
 
     //length (C)
     //normal forward case
-    rbC_pt.start_index=(RB_LENGTH_C-3);
-    rbC_pt.end_index=(RB_LENGTH_C-1);
-    int C_len = rb_length_C(&rbC_pt);
+    rbC_pt.start_index=(RB_LENGTH_B-3);
+    rbC_pt.end_index=(RB_LENGTH_B-1);
+    int C_len = rb_length_B(&rbC_pt);
     if (C_len != 2)
-        printf("rb_length_C: normal case: = %i, should = 2. \n",C_len);
+        printf("rb_length_B: normal case: = %i, should = 2. \n",C_len);
     else
         score++;
 
     //Wrap case
     rbC_pt.end_index=1;
-    C_len = rb_length_C(&rbC_pt);
-    if (C_len != ((rbC_pt.end_index-rbC_pt.start_index)&RB_MASK_C))
-        printf("rb_length_C: wrap case: = %i, should = %i. \n",C_len,(rbC_pt.end_index-rbC_pt.start_index)&RB_MASK_C);
+    C_len = rb_length_B(&rbC_pt);
+    if (C_len != ((rbC_pt.end_index-rbC_pt.start_index)&RB_MASK_B))
+        printf("rb_length_B: wrap case: = %i, should = %i. \n",C_len,(rbC_pt.end_index-rbC_pt.start_index)&RB_MASK_B);
     else
         score++;
 
@@ -137,22 +137,22 @@ int main(void)
     //push_back (C)
     //check end wrap, start increment, and set buffer value
     rbC_pt.start_index=0;
-    rbC_pt.end_index=(RB_LENGTH_C-1);
+    rbC_pt.end_index=(RB_LENGTH_B-1);
 
-    rb_push_back_C(&rbC_pt,'d');
+    rb_push_back_B(&rbC_pt,'d');
     if (rbC_pt.end_index != 0)
-        printf("rb_push_back_C: end_index = %i, should = 0 . \n",rbC_pt.end_index);
+        printf("rb_push_back_B: end_index = %i, should = 0 . \n",rbC_pt.end_index);
     else
         score++;
 
     if (rbC_pt.start_index != 1)
-        printf("rb_push_back_C: start_index = %i, should = 1. \n",rbC_pt.start_index);
+        printf("rb_push_back_B: start_index = %i, should = 1. \n",rbC_pt.start_index);
     else
         score++;
 
-    char val_C = rbC_pt.buffer[ (rbC_pt.end_index-1) & RB_MASK_C];
-    if (val_C != 'd')
-        printf("rb_push_back_C: value, should = 'd': %c \n",val_C);
+    char val_B = rbC_pt.buffer[ (rbC_pt.end_index-1) & RB_MASK_B];
+    if (val_B != 'd')
+        printf("rb_push_back_B: value, should = 'd': %c \n",val_B);
     else
         score++;
 
@@ -184,22 +184,22 @@ int main(void)
     //push_front (C)
     //check start wrap, end increment, and set buffer value
     rbC_pt.start_index=0;
-    rbC_pt.end_index=(RB_LENGTH_C-1);
+    rbC_pt.end_index=(RB_LENGTH_B-1);
 
-    rb_push_front_C(&rbC_pt,'e');
-    if (rbC_pt.end_index != (RB_LENGTH_C-2))
-        printf("rb_push_front_C: end_index = %i, should = %i . \n",rbC_pt.end_index,(RB_LENGTH_C-2));
+    rb_push_front_B(&rbC_pt,'e');
+    if (rbC_pt.end_index != (RB_LENGTH_B-2))
+        printf("rb_push_front_B: end_index = %i, should = %i . \n",rbC_pt.end_index,(RB_LENGTH_B-2));
     else
         score++;
 
-    if (rbC_pt.start_index != (RB_LENGTH_C-1))
-        printf("rb_push_front_C: start_index = %i, should = %i. \n",rbC_pt.start_index,(RB_LENGTH_C-1));
+    if (rbC_pt.start_index != (RB_LENGTH_B-1))
+        printf("rb_push_front_B: start_index = %i, should = %i. \n",rbC_pt.start_index,(RB_LENGTH_B-1));
     else
         score++;
 
-    val_C = rbC_pt.buffer[rbC_pt.start_index & RB_MASK_C];
-    if (val_C != 'e')
-        printf("rb_push_front_C: value, should = 'e': %c \n",val_C);
+    val_B = rbC_pt.buffer[rbC_pt.start_index & RB_MASK_B];
+    if (val_B != 'e')
+        printf("rb_push_front_B: value, should = 'e': %c \n",val_B);
     else
         score++;
 
@@ -232,27 +232,27 @@ int main(void)
 
     //pop_back (C)
     //check end wrap, end increment, and buffer value
-    rbC_pt.buffer[(RB_LENGTH_C-1)]='h';
-    rbC_pt.start_index=(RB_LENGTH_C-1);
+    rbC_pt.buffer[(RB_LENGTH_B-1)]='h';
+    rbC_pt.start_index=(RB_LENGTH_B-1);
     rbC_pt.end_index=0;
 
-    val_C = rb_pop_back_C(&rbC_pt);
+    val_B = rb_pop_back_B(&rbC_pt);
 
-    if (rbC_pt.end_index != (RB_LENGTH_C-1))
-        printf("rb_pop_back_C: end_index = %i, should = %i . \n",rbC_pt.end_index,(RB_LENGTH_C-1));
+    if (rbC_pt.end_index != (RB_LENGTH_B-1))
+        printf("rb_pop_back_B: end_index = %i, should = %i . \n",rbC_pt.end_index,(RB_LENGTH_B-1));
     else
         score++;
 
-    if (val_C != 'h')
-        printf("rb_pop_back_C: value, should = 'h': %c \n",val_C);
+    if (val_B != 'h')
+        printf("rb_pop_back_B: value, should = 'h': %c \n",val_B);
     else
         score++;
 
     //check end=start case
-    val_C = rb_pop_back_C(&rbC_pt);
+    val_B = rb_pop_back_B(&rbC_pt);
 
-    if (rbC_pt.start_index != (RB_LENGTH_C-1))
-        printf("rb_pop_back_C: start_index = %i, should = %i . \n",rbC_pt.end_index,(RB_LENGTH_C-1));
+    if (rbC_pt.start_index != (RB_LENGTH_B-1))
+        printf("rb_pop_back_B: start_index = %i, should = %i . \n",rbC_pt.end_index,(RB_LENGTH_B-1));
     else
         score++;
 
@@ -287,27 +287,27 @@ int main(void)
 
     //pop_front (C)
     //check end wrap, end increment, and buffer value
-    rbC_pt.buffer[RB_LENGTH_C-1]='h';
-    rbC_pt.start_index=RB_LENGTH_C-1;
+    rbC_pt.buffer[RB_LENGTH_B-1]='h';
+    rbC_pt.start_index=RB_LENGTH_B-1;
     rbC_pt.end_index=0;
 
-    val_C = rb_pop_front_C(&rbC_pt);
+    val_B = rb_pop_front_B(&rbC_pt);
 
     if (rbC_pt.start_index != 0)
-        printf("rb_pop_front_C: start_index = %i, should = 0 . \n",rbC_pt.start_index);
+        printf("rb_pop_front_B: start_index = %i, should = 0 . \n",rbC_pt.start_index);
     else
         score++;
 
-    if (val_C != 'h')
-        printf("rb_pop_front_C: is %c, should be: 'h' \n",val_C);
+    if (val_B != 'h')
+        printf("rb_pop_front_B: is %c, should be: 'h' \n",val_B);
     else
         score++;
 
     //check end=start case
-    val_C = rb_pop_front_C(&rbC_pt);
+    val_B = rb_pop_front_B(&rbC_pt);
 
     if (rbC_pt.start_index != 0)
-        printf("rb_pop_front_C: start_index = %i, should = 0 . \n",rbC_pt.start_index);
+        printf("rb_pop_front_B: start_index = %i, should = 0 . \n",rbC_pt.start_index);
     else
         score++;
 
@@ -329,11 +329,11 @@ int main(void)
     rbC_pt.buffer[3]='e';
     rbC_pt.buffer[4]='j';
     rbC_pt.buffer[5]='l';
-    rbC_pt.end_index = RB_LENGTH_C-2;
-    rbC_pt.start_index = RB_LENGTH_C-1;
-    val_C = rb_get_C(&rbC_pt,5);
-    if (val_C != 'j')
-        printf("rb_get_C: value is %c, should be = 'j' \n",val_C);
+    rbC_pt.end_index = RB_LENGTH_B-2;
+    rbC_pt.start_index = RB_LENGTH_B-1;
+    val_B = rb_get_B(&rbC_pt,5);
+    if (val_B != 'j')
+        printf("rb_get_B: value is %c, should be = 'j' \n",val_B);
     else
         score++;
 
@@ -352,11 +352,11 @@ int main(void)
 
 //set element (C)
     //check wrap and val
-    rbC_pt.start_index=RB_LENGTH_C-1;
-    rb_set_C(&rbC_pt,3,'k');
-    val_C = rbC_pt.buffer[2];
-    if (val_C != 'k')
-        printf("rb_set_C: value is %c, should be 'k' \n",val_C);
+    rbC_pt.start_index=RB_LENGTH_B-1;
+    rb_set_B(&rbC_pt,3,'k');
+    val_B = rbC_pt.buffer[2];
+    if (val_B != 'k')
+        printf("rb_set_B: value is %c, should be 'k' \n",val_B);
     else
         score++;
 
