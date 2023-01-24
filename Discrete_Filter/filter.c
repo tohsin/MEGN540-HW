@@ -1,4 +1,4 @@
-#include "Filter.h"
+#include "filter.h"
 
 /**
  * Function Filter_Init initializes the filter given two float arrays and the order of the filter.  Note that the
@@ -17,9 +17,9 @@
  * @param denominator_coeffs The denominator coefficients (A/alpha traditionally)
  * @param order The filter order
  */
-void  Filter_Init ( Filter_Data_t* p_filt, float* numerator_coeffs, float* denominator_coeffs, uint8_t order )
+void Filter_Init( Filter_Data_t* p_filt, float* numerator_coeffs, float* denominator_coeffs, uint8_t order )
 {
-	return;
+    return;
 }
 
 /**
@@ -28,7 +28,7 @@ void  Filter_Init ( Filter_Data_t* p_filt, float* numerator_coeffs, float* denom
  * @param p_filt
  * @param shift_amount
  */
-void  Filter_ShiftBy( Filter_Data_t* p_filt, float shift_amount )
+void Filter_ShiftBy( Filter_Data_t* p_filt, float shift_amount )
 {
     return;
 }
@@ -50,9 +50,9 @@ void Filter_SetTo( Filter_Data_t* p_filt, float amount )
  * @param value the new measurement or value
  * @return The newly filtered value
  */
-float Filter_Value( Filter_Data_t* p_filt, float value)
+float Filter_Value( Filter_Data_t* p_filt, float value )
 {
-	return 0;
+    return 0;
 }
 
 /**
@@ -61,5 +61,5 @@ float Filter_Value( Filter_Data_t* p_filt, float value)
  */
 float Filter_Last_Output( Filter_Data_t* p_filt )
 {
-	return 0;
+    return 0;
 }
