@@ -39,7 +39,7 @@ int main(void)
 {
 
     // Example Use Case
-    struct Ring_Buffer_F rbF_pt;
+    Ring_Buffer_Float_t rbF_pt;
     rb_initialize_F(&rbF_pt);
 
     rb_push_back_F(&rbF_pt,1);
@@ -53,7 +53,7 @@ int main(void)
     rb_print_data_F(&rbF_pt); // should be length 3 printing 3,4,5 as the active values
 
 
-    struct Ring_Buffer_B rbC_pt;
+    Ring_Buffer_Byte_t rbC_pt;
     rb_initialize_B(&rbC_pt);
 
     rb_push_back_B(&rbC_pt,'a');

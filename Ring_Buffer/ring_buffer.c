@@ -32,13 +32,13 @@
 #include <stdio.h> // required for the printf in rb_print_data_X functions
 
 // define constant masks for use later based on length chosen
-// these are global scope only to this c file
+// static makes these global scope only to this c file
 static const uint8_t RB_MASK_F = RB_LENGTH_F-1;
 static const uint8_t RB_MASK_B = RB_LENGTH_B-1; 
 
 
 /* Initialization */
-void rb_initialize_F( struct Ring_Buffer_F* p_buf )
+void rb_initialize_F( Ring_Buffer_Float_t* p_buf )
 {
     // set start and end indices to 0
     // no point changing data
@@ -46,7 +46,7 @@ void rb_initialize_F( struct Ring_Buffer_F* p_buf )
     p_buf->end_index = 0;
 }
 
-void rb_initialize_B( struct Ring_Buffer_B* p_buf )
+void rb_initialize_B( Ring_Buffer_Byte_t* p_buf )
 {
     // set start and end indices to 0
     // no point changing data
@@ -56,14 +56,14 @@ void rb_initialize_B( struct Ring_Buffer_B* p_buf )
 
 
 /* Return active Length of Buffer */
-uint8_t rb_length_F( const struct Ring_Buffer_F* p_buf)
+uint8_t rb_length_F( const Ring_Buffer_Float_t* p_buf)
 {
     // calculate the active length using the mask and 2's complement to help
     // verify for your self why this works!
     uint8_t length = (p_buf->end_index - p_buf->start_index) & RB_MASK_F;
     return length;
 }
-uint8_t rb_length_B( const struct Ring_Buffer_B* p_buf)
+uint8_t rb_length_B( const Ring_Buffer_Byte_t* p_buf)
 {
     // your code here!
     // make sure to use the correct mask!
@@ -72,7 +72,7 @@ uint8_t rb_length_B( const struct Ring_Buffer_B* p_buf)
 }
 
 /* Append element to end and lengthen */
-void rb_push_back_F( struct Ring_Buffer_F* p_buf, float value)
+void rb_push_back_F( Ring_Buffer_Float_t* p_buf, float value)
 {   
     // Put data at index end
     // Increment the end index and wrap using the mask.
@@ -81,7 +81,7 @@ void rb_push_back_F( struct Ring_Buffer_F* p_buf, float value)
     // your code here!
 
 }
-void rb_push_back_B( struct Ring_Buffer_B* p_buf, uint8_t value)
+void rb_push_back_B( Ring_Buffer_Byte_t* p_buf, uint8_t value)
 {
     // Put data at index end
     // Increment the end index and wrap using the mask.
@@ -91,7 +91,7 @@ void rb_push_back_B( struct Ring_Buffer_B* p_buf, uint8_t value)
 }
 
 /* Append element to front and lengthen */
-void rb_push_front_F( struct Ring_Buffer_F* p_buf, float value)
+void rb_push_front_F( Ring_Buffer_Float_t* p_buf, float value)
 {
     // Decrement the start index and wrap using the mask.
     // If the end equals the start decrement the end index
@@ -100,7 +100,7 @@ void rb_push_front_F( struct Ring_Buffer_F* p_buf, float value)
     // your code here!
 
 }
-void rb_push_front_B( struct Ring_Buffer_B* p_buf, uint8_t value)
+void rb_push_front_B( Ring_Buffer_Byte_t* p_buf, uint8_t value)
 {
     // Decrement the start index and wrap using the mask.
     // If the end equals the start decrement the end index
@@ -111,7 +111,7 @@ void rb_push_front_B( struct Ring_Buffer_B* p_buf, uint8_t value)
 }
 
 /* Remove element from end and shorten */
-float rb_pop_back_F( struct Ring_Buffer_F* p_buf)
+float rb_pop_back_F( Ring_Buffer_Float_t* p_buf)
 {
     // if end does not equal start (length zero),
     //    reduce end index by 1 and mask
@@ -121,7 +121,7 @@ float rb_pop_back_F( struct Ring_Buffer_F* p_buf)
     // your code here!
     return 0;
 }
-uint8_t  rb_pop_back_B( struct Ring_Buffer_B* p_buf)
+uint8_t  rb_pop_back_B( Ring_Buffer_Byte_t* p_buf)
 {
     // if end does not equal start (length zero),
     //    reduce end index by 1 and mask
@@ -133,7 +133,7 @@ uint8_t  rb_pop_back_B( struct Ring_Buffer_B* p_buf)
 }
 
 /* Remove element from start and shorten */
-float rb_pop_front_F( struct Ring_Buffer_F* p_buf)
+float rb_pop_front_F( Ring_Buffer_Float_t* p_buf)
 {
     // if end does not equal start (length zero),
     //    get value to return at front
@@ -145,7 +145,7 @@ float rb_pop_front_F( struct Ring_Buffer_F* p_buf)
     return 0;
 
 }
-uint8_t  rb_pop_front_B( struct Ring_Buffer_B* p_buf)
+uint8_t  rb_pop_front_B( Ring_Buffer_Byte_t* p_buf)
 {
     // if end does not equal start (length zero),
     //    get value to return at front
@@ -158,14 +158,14 @@ uint8_t  rb_pop_front_B( struct Ring_Buffer_B* p_buf)
 }
 
 /* access element */
-float rb_get_F( const struct Ring_Buffer_F* p_buf, uint8_t index)
+float rb_get_F( const Ring_Buffer_Float_t* p_buf, uint8_t index)
 {
     // return value at start + index wrapped properly
 
     // your code here!
     return 0;
 }
-uint8_t  rb_get_B( const struct Ring_Buffer_B* p_buf, uint8_t index)
+uint8_t  rb_get_B( const Ring_Buffer_Byte_t* p_buf, uint8_t index)
 {
     // return value at start + index wrapped properly
 
@@ -177,13 +177,13 @@ uint8_t  rb_get_B( const struct Ring_Buffer_B* p_buf, uint8_t index)
    poorly defined if inedex is outside of active length.
    Use of the push_back or push_front methods are prefered.
 */
-void  rb_set_F( struct Ring_Buffer_F* p_buf, uint8_t index, float value)
+void  rb_set_F( Ring_Buffer_Float_t* p_buf, uint8_t index, float value)
 {
     // set value at start + index wrapped properly
 
     // your code here!
 }
-void  rb_set_B( struct Ring_Buffer_B* p_buf, uint8_t index, uint8_t value)
+void  rb_set_B( Ring_Buffer_Byte_t* p_buf, uint8_t index, uint8_t value)
 {
     // set value at start + index wrapped properly
 
@@ -194,7 +194,7 @@ void  rb_set_B( struct Ring_Buffer_B* p_buf, uint8_t index, uint8_t value)
  * The below functions are provided to help you debug. They print out the length, start and end index, active elements,
  * and the contents of the buffer.
  */
-void rb_print_data_F(struct Ring_Buffer_F *p_buf)
+void rb_print_data_F(Ring_Buffer_Float_t *p_buf)
 {
     printf("-------FLOAT RINGBUFFER INFO--------\nRing Buffer Length: %i\nStart index: %i\nEnd index: %i\n",rb_length_F(p_buf),p_buf->start_index,p_buf->end_index);
 
@@ -210,7 +210,7 @@ void rb_print_data_F(struct Ring_Buffer_F *p_buf)
 
 }
 
-void rb_print_data_B(struct Ring_Buffer_B *p_buf)
+void rb_print_data_B(Ring_Buffer_Byte_t *p_buf)
 {
     printf("-------BYTE RINGBUFFER INFO--------\nRing Buffer Length: %i\nStart index: %i\nEnd index: %i\n",rb_length_B(p_buf),p_buf->start_index,p_buf->end_index);
 
