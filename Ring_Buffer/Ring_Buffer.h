@@ -80,9 +80,11 @@ typedef struct {
     uint8_t end_index;
 } Ring_Buffer_Byte_t;
 
+#ifndef AVR_MCU  // dont build these for the car builds
 // Debugging Assistant Functions (these are already written for you)
 void rb_print_data_F( Ring_Buffer_Float_t* p_buf );
 void rb_print_data_B( Ring_Buffer_Byte_t* p_buf );
+#endif
 
 /****** Functions   **********/
 

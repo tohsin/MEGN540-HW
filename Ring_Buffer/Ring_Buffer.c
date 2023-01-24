@@ -185,6 +185,7 @@ void rb_set_B( Ring_Buffer_Byte_t* p_buf, uint8_t index, uint8_t value )
     // your code here!
 }
 
+#ifndef AVR_MCU  // dont build these for the car builds
 /*
  * The below functions are provided to help you debug. They print out the length, start and end index, active elements,
  * and the contents of the buffer.
@@ -221,3 +222,4 @@ void rb_print_data_B( Ring_Buffer_Byte_t* p_buf )
 
     printf( "-------END BYTE RINGBUFFER INFO---------\n\n" );
 }
+#endif
