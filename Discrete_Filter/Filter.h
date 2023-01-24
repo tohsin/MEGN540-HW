@@ -44,7 +44,7 @@
 #    warning RB_LENGTH_F has been defined outside of filter.h, care should be taken that it is large enough for the filter to use.
 #endif
 
-#include "ring_buffer.h"
+#include "Ring_Buffer.h"
 
 typedef struct {
     Ring_Buffer_Float_t numerator;
