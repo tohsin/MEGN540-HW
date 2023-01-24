@@ -28,7 +28,7 @@
 
 */
 
-#include "filter.h"
+#include "Filter.h"
 
 #include <math.h>  // max
 #include <stdio.h>
