@@ -56,36 +56,33 @@
 #ifndef RING_BUFFER_H
 #define RING_BUFFER_H
 
-#include "stdint.h" // for uint8_t type
+#include "stdint.h"  // for uint8_t type
 
 #ifndef RB_LENGTH_F
-#define RB_LENGTH_F 8  // must be a power of 2 (max of 256). This is an easy place to adjust max expected length
+#    define RB_LENGTH_F 8  // must be a power of 2 (max of 256). This is an easy place to adjust max expected length
 #endif
 
 #ifndef RB_LENGTH_B
-#define RB_LENGTH_B 16  // must be a power of 2 (max of 256). This is an easy place to adjust max expected length
+#    define RB_LENGTH_B 16  // must be a power of 2 (max of 256). This is an easy place to adjust max expected length
 #endif
 
-// data structure for a float ring buffer 
-typedef struct 
-{
+// data structure for a float ring buffer
+typedef struct {
     float buffer[RB_LENGTH_F];
     uint8_t start_index;
     uint8_t end_index;
 } Ring_Buffer_Float_t;
 
 // data structure for a uint8_t ring buffer
-typedef struct 
-{
+typedef struct {
     uint8_t buffer[RB_LENGTH_B];
     uint8_t start_index;
     uint8_t end_index;
 } Ring_Buffer_Byte_t;
 
 // Debugging Assistant Functions (these are already written for you)
-void rb_print_data_F(Ring_Buffer_Float_t *p_buf);
-void rb_print_data_B(Ring_Buffer_Byte_t *p_buf);
-
+void rb_print_data_F( Ring_Buffer_Float_t* p_buf );
+void rb_print_data_B( Ring_Buffer_Byte_t* p_buf );
 
 /****** Functions   **********/
 
@@ -94,35 +91,34 @@ void rb_initialize_F( Ring_Buffer_Float_t* p_buf );
 void rb_initialize_B( Ring_Buffer_Byte_t* p_buf );
 
 /* Return active Length of Buffer */
-uint8_t rb_length_F( const Ring_Buffer_Float_t* p_buf);
-uint8_t rb_length_B( const Ring_Buffer_Byte_t* p_buf);
+uint8_t rb_length_F( const Ring_Buffer_Float_t* p_buf );
+uint8_t rb_length_B( const Ring_Buffer_Byte_t* p_buf );
 
 /* Append element to end and lengthen */
-void rb_push_back_F( Ring_Buffer_Float_t* p_buf, float value);
-void rb_push_back_B( Ring_Buffer_Byte_t* p_buf, uint8_t value);
+void rb_push_back_F( Ring_Buffer_Float_t* p_buf, float value );
+void rb_push_back_B( Ring_Buffer_Byte_t* p_buf, uint8_t value );
 
 /* Append element to front and lengthen */
-void rb_push_front_F( Ring_Buffer_Float_t* p_buf, float value);
-void rb_push_front_B( Ring_Buffer_Byte_t* p_buf, uint8_t value);
+void rb_push_front_F( Ring_Buffer_Float_t* p_buf, float value );
+void rb_push_front_B( Ring_Buffer_Byte_t* p_buf, uint8_t value );
 
 /* Remove element from end and shorten */
-float rb_pop_back_F( Ring_Buffer_Float_t* p_buf);
-uint8_t  rb_pop_back_B( Ring_Buffer_Byte_t* p_buf);
+float rb_pop_back_F( Ring_Buffer_Float_t* p_buf );
+uint8_t rb_pop_back_B( Ring_Buffer_Byte_t* p_buf );
 
 /* Remove element from start and shorten */
-float rb_pop_front_F( Ring_Buffer_Float_t* p_buf);
-uint8_t  rb_pop_front_B( Ring_Buffer_Byte_t* p_buf);
+float rb_pop_front_F( Ring_Buffer_Float_t* p_buf );
+uint8_t rb_pop_front_B( Ring_Buffer_Byte_t* p_buf );
 
 /* access element */
-float rb_get_F( const Ring_Buffer_Float_t* p_buf, uint8_t index);
-uint8_t  rb_get_B( const Ring_Buffer_Byte_t* p_buf, uint8_t index);
+float rb_get_F( const Ring_Buffer_Float_t* p_buf, uint8_t index );
+uint8_t rb_get_B( const Ring_Buffer_Byte_t* p_buf, uint8_t index );
 
-/* set element - This behavior is 
+/* set element - This behavior is
    poorly defined if index is outside of active length.
    Use of the push_back or push_front methods are preferred.
 */
-void  rb_set_F( Ring_Buffer_Float_t* p_buf, uint8_t index, float value);
-void  rb_set_B( Ring_Buffer_Byte_t* p_buf, uint8_t index, uint8_t value);
-
+void rb_set_F( Ring_Buffer_Float_t* p_buf, uint8_t index, float value );
+void rb_set_B( Ring_Buffer_Byte_t* p_buf, uint8_t index, uint8_t value );
 
 #endif
