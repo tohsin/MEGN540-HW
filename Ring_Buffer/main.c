@@ -28,7 +28,7 @@
 
 */
 
-#include "ring_buffer.h"
+#include "Ring_Buffer.h"
 
 #include <math.h>
 #include <stdio.h>
