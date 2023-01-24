@@ -28,7 +28,7 @@
 
 */
 
-#include "Ring_Buffer.h"
+#include "ring_buffer.h"
 #include <stdio.h> // required for the printf in rb_print_data_X functions
 
 // define constant masks for use later based on length chosen

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "Ring_Buffer.h"
+#include "ring_buffer.h"
 
 
 
