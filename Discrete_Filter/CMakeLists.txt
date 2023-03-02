@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 project(Discrete_Filter)
 
 set(RING_BUFFER_DIR ../Ring_Buffer)
-
+set(CMAKE_BUILD_TYPE Debug)
 # add the executable
 add_executable(disc_filter_eval main.c Filter.c ${RING_BUFFER_DIR}/Ring_Buffer.c)
 
