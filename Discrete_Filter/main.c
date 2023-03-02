@@ -162,17 +162,11 @@ int main()
     filter_order = sizeof( num ) / sizeof( float ) - 1;
     Filter_Init( &moving_average, num, den, filter_order );
 
-    float vals[50];
-
     for( int i = 0; i < RB_LENGTH_F * 2; i++ ) {
-        vals[i]   = i;
-        float avg = 0;
 
-        for( int j = ( ( i - 4 ) > 0 ) ? ( i - 4 ) : 0; j <= i; j++ )
-            avg += vals[j];
-        avg /= 5.0;
+        float avg = ( i - 5 ) * ( i > 4 ) + ( i > 4 ? 3 : i * ( i + 1 ) / 10. );
 
-        float filt_avg = Filter_Value( &moving_average, vals[i] );
+        float filt_avg = Filter_Value( &moving_average, i );
 
         total_score++;
         if( fabs( filt_avg - avg ) < 1e-4 ) {
