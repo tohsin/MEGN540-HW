@@ -32,10 +32,55 @@
 
 #include <stdio.h>  // required for the printf in rb_print_data_X functions
 
+
 // define constant masks for use later based on length chosen
 // static makes these global scope only to this c file
 static const uint8_t RB_MASK_F = RB_LENGTH_F - 1;
 static const uint8_t RB_MASK_B = RB_LENGTH_B - 1;
+
+
+// Helper Functions start here
+
+void increment_start_index_F(Ring_Buffer_Float_t* p_buf){
+    p_buf->start_index = (p_buf->start_index + 1) & RB_MASK_F;
+}
+void increment_start_index_B(Ring_Buffer_Byte_t* p_buf){
+    p_buf->start_index = (p_buf->start_index + 1) & RB_MASK_B;
+}
+
+void increment_end_index_F(Ring_Buffer_Float_t* p_buf){
+    p_buf->end_index = (p_buf->end_index + 1) & RB_MASK_F;
+}
+
+void increment_end_index_B(Ring_Buffer_Byte_t* p_buf){
+    p_buf->end_index = (p_buf->end_index + 1) & RB_MASK_B;
+}
+
+void decrement_start_index_F(Ring_Buffer_Float_t* p_buf){
+    p_buf->start_index = (p_buf->start_index - 1) & RB_MASK_F;
+}
+
+void decrement_start_index_B(Ring_Buffer_Byte_t* p_buf){
+    p_buf->start_index = (p_buf->start_index - 1) & RB_MASK_B;
+}
+
+void decrement_end_index_F(Ring_Buffer_Float_t* p_buf){
+    p_buf->end_index = (p_buf->end_index - 1) & RB_MASK_F;
+}
+
+void decrement_end_index_B(Ring_Buffer_Byte_t* p_buf){
+    p_buf->end_index = (p_buf->end_index - 1) & RB_MASK_B;
+}
+
+uint8_t start_index_equals_end_index_F(Ring_Buffer_Float_t* p_buf){
+    return p_buf->start_index == p_buf->end_index;
+}
+
+uint8_t start_index_equals_end_index_B(Ring_Buffer_Byte_t* p_buf){
+    return p_buf->start_index == p_buf->end_index;
+}
+
+// helper functions end here
 
 /* Initialization */
 void rb_initialize_F( Ring_Buffer_Float_t* p_buf )
@@ -66,8 +111,8 @@ uint8_t rb_length_B( const Ring_Buffer_Byte_t* p_buf )
 {
     // your code here!
     // make sure to use the correct mask!
-
-    return 0;
+    uint8_t length = ( p_buf->end_index - p_buf->start_index ) & RB_MASK_B;
+    return length;
 }
 
 /* Append element to end and lengthen */
@@ -76,7 +121,12 @@ void rb_push_back_F( Ring_Buffer_Float_t* p_buf, float value )
     // Put data at index end
     // Increment the end index and wrap using the mask.
     // If the end equals the start increment the start index
+    p_buf->buffer[p_buf->end_index] = value;
 
+    increment_end_index_F(p_buf);
+    // p_buf->end_index  = ( p_buf->end_index + 1 ) & RB_MASK_F;
+    if( start_index_equals_end_index_F(p_buf) )
+        increment_start_index_F(p_buf);
     // your code here!
 }
 void rb_push_back_B( Ring_Buffer_Byte_t* p_buf, uint8_t value )
@@ -84,7 +134,10 @@ void rb_push_back_B( Ring_Buffer_Byte_t* p_buf, uint8_t value )
     // Put data at index end
     // Increment the end index and wrap using the mask.
     // If the end equals the start increment the start index
-
+    p_buf->buffer[p_buf->end_index] = value;
+    increment_end_index_B(p_buf);
+    if( start_index_equals_end_index_B(p_buf) )
+        increment_start_index_B(p_buf);
     // your code here!
 }
 
@@ -94,7 +147,10 @@ void rb_push_front_F( Ring_Buffer_Float_t* p_buf, float value )
     // Decrement the start index and wrap using the mask.
     // If the end equals the start decrement the end index
     // Set the value at the start index as desired.
-
+    decrement_start_index_F(p_buf);
+    if( start_index_equals_end_index_F(p_buf)  )
+        decrement_end_index_F(p_buf);
+    p_buf->buffer[p_buf->start_index] = value;
     // your code here!
 }
 void rb_push_front_B( Ring_Buffer_Byte_t* p_buf, uint8_t value )
@@ -102,7 +158,10 @@ void rb_push_front_B( Ring_Buffer_Byte_t* p_buf, uint8_t value )
     // Decrement the start index and wrap using the mask.
     // If the end equals the start decrement the end index
     // Set the value at the start index as desired.
-
+    decrement_start_index_B(p_buf);
+    if(start_index_equals_end_index_B(p_buf) )
+        decrement_end_index_B(p_buf);
+    p_buf->buffer[p_buf->start_index] = value;
     // your code here!
 }
 
@@ -113,7 +172,12 @@ float rb_pop_back_F( Ring_Buffer_Float_t* p_buf )
     //    reduce end index by 1 and mask
     // 	  return value at at end
     // else return zero if your lis is length zero
-
+    
+    if(!(start_index_equals_end_index_F(p_buf)))
+    {
+        decrement_end_index_F(p_buf);
+        return p_buf->buffer[p_buf->end_index];
+    }
     // your code here!
     return 0;
 }
@@ -123,7 +187,11 @@ uint8_t rb_pop_back_B( Ring_Buffer_Byte_t* p_buf )
     //    reduce end index by 1 and mask
     // 	  return value at at end
     // else return zero if list is length zero
-
+    if(! start_index_equals_end_index_B(p_buf))
+    {
+        decrement_end_index_B(p_buf);
+        return p_buf->buffer[p_buf->end_index];
+    }
     // your code here!
     return 0;
 }
@@ -136,6 +204,12 @@ float rb_pop_front_F( Ring_Buffer_Float_t* p_buf )
     //    increase start index by 1 and mask
     //    return value
     // else return zero if length of list is zero
+    if(! start_index_equals_end_index_F(p_buf))
+    {
+        float value = p_buf->buffer[p_buf->start_index];
+        increment_start_index_F(p_buf);
+        return value;
+    }
 
     // your code here!
     return 0;
@@ -147,7 +221,12 @@ uint8_t rb_pop_front_B( Ring_Buffer_Byte_t* p_buf )
     //    increase start index by 1 and mask
     //    return value
     // else return zero if length of list is zero
-
+    if(! start_index_equals_end_index_B(p_buf))
+    {
+        uint8_t value = p_buf->buffer[p_buf->start_index];
+        increment_start_index_B(p_buf);
+        return value;
+    }
     // your code here!
     return 0;
 }
@@ -156,16 +235,13 @@ uint8_t rb_pop_front_B( Ring_Buffer_Byte_t* p_buf )
 float rb_get_F( const Ring_Buffer_Float_t* p_buf, uint8_t index )
 {
     // return value at start + index wrapped properly
-
+    return p_buf->buffer[(p_buf->start_index + index) & RB_MASK_F];
     // your code here!
-    return 0;
 }
 uint8_t rb_get_B( const Ring_Buffer_Byte_t* p_buf, uint8_t index )
 {
     // return value at start + index wrapped properly
-
-    // your code here!
-    return 0;
+    return p_buf->buffer[(p_buf->start_index + index) & RB_MASK_B];
 }
 
 /* set element - This behavior is
@@ -175,14 +251,12 @@ uint8_t rb_get_B( const Ring_Buffer_Byte_t* p_buf, uint8_t index )
 void rb_set_F( Ring_Buffer_Float_t* p_buf, uint8_t index, float value )
 {
     // set value at start + index wrapped properly
-
-    // your code here!
+    p_buf->buffer[(p_buf->start_index + index) & RB_MASK_F] = value;
 }
 void rb_set_B( Ring_Buffer_Byte_t* p_buf, uint8_t index, uint8_t value )
 {
     // set value at start + index wrapped properly
-
-    // your code here!
+    p_buf->buffer[(p_buf->start_index + index) & RB_MASK_B] = value;
 }
 
 #ifndef AVR_MCU  // dont build these for the car builds

@@ -98,7 +98,7 @@ uint8_t rb_length_B( const Ring_Buffer_Byte_t* p_buf );
 
 /* Append element to end and lengthen */
 void rb_push_back_F( Ring_Buffer_Float_t* p_buf, float value );
-void rb_push_back_B( Ring_Buffer_Byte_t* p_buf, uint8_t value );
+void boolrb_push_back_B( Ring_Buffer_Byte_t* p_buf, uint8_t value );
 
 /* Append element to front and lengthen */
 void rb_push_front_F( Ring_Buffer_Float_t* p_buf, float value );
@@ -123,4 +123,19 @@ uint8_t rb_get_B( const Ring_Buffer_Byte_t* p_buf, uint8_t index );
 void rb_set_F( Ring_Buffer_Float_t* p_buf, uint8_t index, float value );
 void rb_set_B( Ring_Buffer_Byte_t* p_buf, uint8_t index, uint8_t value );
 
+// Helper Functions
+uint8_t start_index_equals_end_index_F(Ring_Buffer_Float_t* p_buf);
+uint8_t start_index_equals_end_index_B(Ring_Buffer_Byte_t* p_buf);
+
+void increment_start_index_F(Ring_Buffer_Float_t* p_buf);
+void increment_start_index_B(Ring_Buffer_Byte_t* p_buf);
+
+void increment_end_index_F(Ring_Buffer_Float_t* p_buf);
+void increment_end_index_B(Ring_Buffer_Byte_t* p_buf);
+
+void decrement_start_index_F(Ring_Buffer_Float_t* p_buf);
+void decrement_start_index_B(Ring_Buffer_Byte_t* p_buf);
+
+void decrement_end_index_F(Ring_Buffer_Float_t* p_buf);
+void decrement_end_index_B(Ring_Buffer_Byte_t* p_buf);
 #endif
